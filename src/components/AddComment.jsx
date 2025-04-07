@@ -10,6 +10,17 @@ class AddComment extends Component {
     },
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.asin !== this.props.asin) {
+      this.setState({
+        comment: {
+          ...this.state.comment,
+          elementId: this.props.asin,
+        },
+      })
+    }
+  }
+
   sendComment = async (e) => {
     e.preventDefault()
     try {
@@ -43,7 +54,6 @@ class AddComment extends Component {
   }
 
   render() {
-    console.log("SONO ENTRATA NEL RENDER DI ADDCOMMENT")
     return (
       <div className="my-3">
         <Form onSubmit={this.sendComment}>

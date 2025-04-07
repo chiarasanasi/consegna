@@ -1,33 +1,34 @@
 import Button from "react-bootstrap/Button"
 import Card from "react-bootstrap/Card"
 import { Component } from "react"
-import CommentArea from "./CommentArea "
+import CommentArea from "./CommentArea"
 
 class SingleBook extends Component {
   state = {
-    selected: false,
+    // selected: false,
     color: "white",
     showComments: false,
   }
 
-  selection = () => {
-    console.log("sto cliccando sulla card")
-    this.setState({ selected: !this.state.selected })
-  }
-
   render() {
     const { categoryColor } = this.props
-
+    console.log(
+      `Asin di ${this.props.category.title}`,
+      this.props.category.asin
+    )
     return (
       <>
         <Card
+          onClick={() =>
+            this.props.changeSelectedBook(this.props.category.asin)
+          }
           className=" border-3 rounded-3 bg-dark"
           style={{
-            border: this.state.selected
-              ? `solid ${categoryColor}`
-              : "solid #212529",
+            border:
+              this.props.selectedBook === this.props.category.asin
+                ? `solid ${categoryColor}`
+                : "solid #212529",
           }}
-          onClick={() => this.setState({ selected: !this.state.selected })}
         >
           <Card.Img
             variant="top"
@@ -40,16 +41,19 @@ class SingleBook extends Component {
               {this.props.category.title}
             </Card.Title>
             <Card.Text className="text-white text-uppercase fw-semibold fst-italic">
-              Category : {this.props.category.category}
+              categoria : {this.props.category.category}
             </Card.Text>
             <Card.Text className="text-secondary">
-              Price : ${this.props.category.price}
+              Prezzo : {this.props.category.price}€
             </Card.Text>
-            <Button
+            {/* <Button
               variant="primary"
               className="mt-auto"
               onClick={() =>
-                this.setState({ showComments: !this.state.showComments })
+                this.setState({
+                  showComments: !this.state.showComments,
+                  selected: !this.state.selected,
+                })
               }
             >
               Recensioni
@@ -58,7 +62,7 @@ class SingleBook extends Component {
               <div id={`comments-${this.props.category.asin}`}>
                 <CommentArea asin={this.props.category.asin} />
               </div>
-            )}
+            )} */}
           </Card.Body>
         </Card>
       </>
